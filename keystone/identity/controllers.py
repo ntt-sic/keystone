@@ -25,6 +25,7 @@ from keystone.common import controller
 from keystone import config
 from keystone import exception
 from keystone.openstack.common import log as logging
+from keystone.openstack.common import idempotent
 
 CONF = config.CONF
 DEFAULT_DOMAIN_ID = CONF.identity.default_domain_id
@@ -190,6 +191,8 @@ class User(controller.V2Controller):
         return {'user': self.identity_api.v3_to_v2_user(ref)}
 
     # CRUD extension
+    @idempotent.idempotent
+    @idempotent.helper(substance="get_user", resolver="id")
     def create_user(self, context, user):
         user = self._normalize_dict(user)
         self.assert_admin(context)

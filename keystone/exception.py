@@ -85,6 +85,12 @@ class ValidationSizeError(Error):
     title = 'Bad Request'
 
 
+class InvalidClientToken(Error):
+    message_format = _("%(details)s")
+    code = 400
+    title = 'Bad Request'
+
+
 class SecurityError(Error):
     """Avoids exposing details of security failures, unless in debug mode."""
 
