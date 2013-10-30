@@ -88,6 +88,8 @@ class Tenant(controller.V2Controller):
         return {'tenant': self.filter_domain_id(ref)}
 
     # CRUD Extension
+    @idempotent.idempotent
+    @idempotent.helper(substance="get_project", resolver="id")
     def create_project(self, context, tenant):
         tenant_ref = self._normalize_dict(tenant)
 
